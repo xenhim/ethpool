@@ -5,12 +5,25 @@ import (
 	"math/big"
 	"strconv"
 	"strings"
+	"bytes"
+	"testing"
 
+	"github.com/sammy007/open-ethereum-pool/cryptonight"
 	"github.com/ethereum/ethash"
 	"github.com/ethereum/go-ethereum/common"
 )
 
 var hasher = ethash.New()
+
+func TestHashBytes(t *testing.T) {
+        var b [1024]byte
+        r1 := cryptonight.HashBytes(b[:])
+        r2 := cryptonight.HashBytes(b[:])
+        if ! bytes.Equal(r1[:], r2[:]) {
+                t.Fail()
+        }
+}
+
 
 func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, params []string) (bool, bool) {
 	nonceHex := params[0]
@@ -40,6 +53,7 @@ func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, param
 		nonce:       nonce,
 		mixDigest:   common.HexToHash(mixDigest),
 	}
+
 
 	if !hasher.Verify(share) {
 		return false, false

@@ -1,4 +1,4 @@
-package proxy
+package cryptonight
 // #cgo LDFLAGS: -lboost_system
 // #cgo CXXFLAGS: -std=c++11
 // #cgo CFLAGS: -maes
